@@ -1287,7 +1287,7 @@ footer {
 }
 
 .foot-intro,
-.foot-col a,
+.foot-col a:not(.social-btn),
 .foot-col p {
   display: block;
   color: #e7dcc9;
