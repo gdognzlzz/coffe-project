@@ -418,7 +418,7 @@
 
 .photo-reveal {
   position: absolute;
-  inset: -18px -22px -60px -22px;
+  inset: -18px -60px -60px -60px;
   z-index: 7;
   border-radius: 10px;
   overflow: hidden;
@@ -738,6 +738,19 @@
 .order-section {
   background: var(--paper);
   padding: 7rem 0;
+}
+
+.order-section .menu-head .eyebrow {
+  display: block;
+  margin-bottom: 1.1rem;
+}
+
+.order-section .menu-head h2 {
+  margin-bottom: 1.4rem;
+}
+
+.order-section .menu-head p {
+  margin-top: 1.3rem;
 }
 
 .order-box {

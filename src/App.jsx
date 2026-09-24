@@ -826,7 +826,6 @@ function App() {
               <p>
                 Aquí el tiempo se toma con calma — entre plantas, tazas de barro y una selección de música que acompaña cada sobremesa.
               </p>
-              <div className="about-signature">Almán La Finca</div>
             </div>
           </div>
         </section>
