@@ -670,6 +670,10 @@ function App() {
     setLightbox(item)
   }
 
+  function stepGallery(delta) {
+    setGalleryIndex((current) => (current + delta + galleryItems.length) % galleryItems.length)
+  }
+
   function addToCart() {
     const price = priceToNumber(selectedItem.p)
     const lineId = `${selectedCategory.id}-${selectedItem.n}`
@@ -876,17 +880,26 @@ function App() {
             <div className="eyebrow">Nuestro Café</div>
             <h2>Galería</h2>
           </div>
-          <div
-            className="gallery-viewport"
-            ref={galleryViewportRef}
-            onPointerDown={handleGalleryPointerDown}
-            onPointerMove={handleGalleryPointerMove}
-            onPointerUp={endGalleryDrag}
-            onPointerLeave={endGalleryDrag}
-            onPointerCancel={endGalleryDrag}
-          >
-            <div className={`gallery-track${galleryDragging ? ' dragging' : ''}`} id="galleryTrack">
-              {galleryItems.map((item, index) => {
+          <div className="gallery-carousel">
+            <button
+              type="button"
+              className="gallery-arrow gallery-arrow-left"
+              onClick={() => stepGallery(-1)}
+              aria-label="Producto anterior"
+            >
+              ‹
+            </button>
+            <div
+              className="gallery-viewport"
+              ref={galleryViewportRef}
+              onPointerDown={handleGalleryPointerDown}
+              onPointerMove={handleGalleryPointerMove}
+              onPointerUp={endGalleryDrag}
+              onPointerLeave={endGalleryDrag}
+              onPointerCancel={endGalleryDrag}
+            >
+              <div className={`gallery-track${galleryDragging ? ' dragging' : ''}`} id="galleryTrack">
+                {galleryItems.map((item, index) => {
                 const count = galleryItems.length
                 let offset = index - galleryIndex
                 if (offset > count / 2) {
@@ -898,7 +911,7 @@ function App() {
                 const absOffset = Math.abs(offset)
                 const isVisible = absOffset <= 2
                 const scale = absOffset === 0 ? 1 : absOffset === 1 ? 0.78 : 0.6
-                const translate = `calc(-50% + (${offset}) * min(46vw, 220px) + ${galleryDragOffset}px)`
+                const translate = `calc(-50% + (${offset}) * var(--gallery-step) + ${galleryDragOffset}px)`
 
                 return (
                   <div
@@ -925,8 +938,17 @@ function App() {
                     </div>
                   </div>
                 )
-              })}
+                })}
+              </div>
             </div>
+            <button
+              type="button"
+              className="gallery-arrow gallery-arrow-right"
+              onClick={() => stepGallery(1)}
+              aria-label="Producto siguiente"
+            >
+              ›
+            </button>
           </div>
           <div className="gallery-dots">
             {galleryItems.map((item, index) => (
