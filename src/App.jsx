@@ -771,7 +771,7 @@ function App() {
             Menú
           </a>
           <a href="#pedido" onClick={() => setNavOpen(false)}>
-            Orden
+            Ordena
           </a>
           <a href="#ubicacion" onClick={() => setNavOpen(false)}>
             Detalles
