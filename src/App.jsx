@@ -732,7 +732,9 @@ function App() {
       message += `Nombre: ${orderName.trim()}\n`
     }
 
-    message += `Personas: ${guestCount}\n`
+    if (orderMode === 'Para comer aquí') {
+      message += `Personas: ${guestCount}\n`
+    }
     message += '\nPedido:\n'
     cart.forEach((line) => {
       message += `- ${line.name} x${line.qty} ($${line.price * line.qty})\n`
@@ -1115,26 +1117,28 @@ function App() {
                 </div>
               </div>
 
-              <div className="order-eta order-people">
-                <span>¿Cuántas personas son?</span>
-                <div className="order-qty">
-                  <button
-                    type="button"
-                    onClick={() => setGuestCount((current) => Math.max(1, current - 1))}
-                    aria-label="Restar persona"
-                  >
-                    −
-                  </button>
-                  <span>{guestCount}</span>
-                  <button
-                    type="button"
-                    onClick={() => setGuestCount((current) => Math.min(20, current + 1))}
-                    aria-label="Sumar persona"
-                  >
-                    +
-                  </button>
+              {orderMode === 'Para comer aquí' ? (
+                <div className="order-eta order-people">
+                  <span>¿Cuántas personas son?</span>
+                  <div className="order-qty">
+                    <button
+                      type="button"
+                      onClick={() => setGuestCount((current) => Math.max(1, current - 1))}
+                      aria-label="Restar persona"
+                    >
+                      −
+                    </button>
+                    <span>{guestCount}</span>
+                    <button
+                      type="button"
+                      onClick={() => setGuestCount((current) => Math.min(20, current + 1))}
+                      aria-label="Sumar persona"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
-              </div>
+              ) : null}
 
               <input
                 type="text"
