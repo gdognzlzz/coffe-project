@@ -495,8 +495,11 @@ function App() {
   const [orderMode, setOrderMode] = useState('Para comer aquí')
   const [orderName, setOrderName] = useState('')
   const [orderSpecs, setOrderSpecs] = useState('')
+  const [guestCount, setGuestCount] = useState(1)
   const [lightbox, setLightbox] = useState(null)
-  const [tapPaused, setTapPaused] = useState(false)
+  const [galleryIndex, setGalleryIndex] = useState(0)
+  const [galleryDragOffset, setGalleryDragOffset] = useState(0)
+  const [galleryDragging, setGalleryDragging] = useState(false)
   const [cupState, setCupState] = useState({
     progress: 0,
     fill: 0,
@@ -512,6 +515,7 @@ function App() {
   const cupSectionRef = useRef(null)
   const navRef = useRef(null)
   const galleryViewportRef = useRef(null)
+  const galleryDragRef = useRef({ startX: 0, offset: 0, moved: false, dragging: false })
 
   const selectedCategory = menuData.find((category) => category.id === orderCategory) || menuData[0]
   const selectedItem = selectedCategory.items[orderItemIndex] || selectedCategory.items[0]
@@ -615,20 +619,56 @@ function App() {
     return () => document.removeEventListener('mousedown', onPointerDown)
   }, [navOpen])
 
-  useEffect(() => {
-    if (!tapPaused) {
+  function handleGalleryPointerDown(event) {
+    galleryDragRef.current = { startX: event.clientX, offset: 0, moved: false, dragging: true }
+    setGalleryDragging(true)
+    event.currentTarget.setPointerCapture?.(event.pointerId)
+    event.preventDefault()
+  }
+
+  function handleGalleryPointerMove(event) {
+    const drag = galleryDragRef.current
+    if (!drag.dragging) {
       return
     }
+    event.preventDefault()
+    const delta = event.clientX - drag.startX
+    drag.offset = delta
+    if (Math.abs(delta) > 6) {
+      drag.moved = true
+    }
+    setGalleryDragOffset(delta)
+  }
 
-    const onDocClick = (event) => {
-      if (galleryViewportRef.current && !galleryViewportRef.current.contains(event.target)) {
-        setTapPaused(false)
+  function endGalleryDrag(event) {
+    const drag = galleryDragRef.current
+    if (!drag.dragging) {
+      return
+    }
+    if (event?.currentTarget?.releasePointerCapture && event.pointerId !== undefined) {
+      try {
+        event.currentTarget.releasePointerCapture(event.pointerId)
+      } catch {
+        // ignore if capture was already released
       }
     }
+    const threshold = 60
+    if (drag.offset < -threshold) {
+      setGalleryIndex((current) => (current + 1) % galleryItems.length)
+    } else if (drag.offset > threshold) {
+      setGalleryIndex((current) => (current - 1 + galleryItems.length) % galleryItems.length)
+    }
+    drag.dragging = false
+    setGalleryDragging(false)
+    setGalleryDragOffset(0)
+  }
 
-    document.addEventListener('click', onDocClick)
-    return () => document.removeEventListener('click', onDocClick)
-  }, [tapPaused])
+  function handleGalleryCardClick(item) {
+    if (galleryDragRef.current.moved) {
+      return
+    }
+    setLightbox(item)
+  }
 
   function addToCart() {
     const price = priceToNumber(selectedItem.p)
@@ -682,12 +722,13 @@ function App() {
     }
 
     const total = cart.reduce((sum, line) => sum + line.price * line.qty, 0)
-    let message = 'Hola, quiero hacer un pedido anticipado en Almán La Finca.\n'
+    let message = 'Hola, quiero hacer una orden anticipada en Almán La Finca.\n'
 
     if (orderName.trim()) {
       message += `Nombre: ${orderName.trim()}\n`
     }
 
+    message += `Personas: ${guestCount}\n`
     message += '\nPedido:\n'
     cart.forEach((line) => {
       message += `- ${line.name} x${line.qty} ($${line.price * line.qty})\n`
@@ -835,32 +876,68 @@ function App() {
             <div className="eyebrow">Nuestro Café</div>
             <h2>Galería</h2>
           </div>
-          <div className="gallery-viewport" ref={galleryViewportRef}>
-            <div className={`gallery-track${tapPaused ? ' tap-paused' : ''}`} id="galleryTrack">
-              {[...galleryItems, ...galleryItems].map((item, index) => (
-                <div className="gallery-card" key={`${item.title}-${index}`}>
-                  <button
-                    type="button"
-                    className="gallery-photo"
-                    onClick={() => setLightbox(item)}
-                    aria-label={`Ver ${item.title}`}
-                  >
-                    <img src={item.source} alt={`Almán La Finca: ${item.title}`} />
-                  </button>
+          <div
+            className="gallery-viewport"
+            ref={galleryViewportRef}
+            onPointerDown={handleGalleryPointerDown}
+            onPointerMove={handleGalleryPointerMove}
+            onPointerUp={endGalleryDrag}
+            onPointerLeave={endGalleryDrag}
+            onPointerCancel={endGalleryDrag}
+          >
+            <div className={`gallery-track${galleryDragging ? ' dragging' : ''}`} id="galleryTrack">
+              {galleryItems.map((item, index) => {
+                const count = galleryItems.length
+                let offset = index - galleryIndex
+                if (offset > count / 2) {
+                  offset -= count
+                }
+                if (offset < -count / 2) {
+                  offset += count
+                }
+                const absOffset = Math.abs(offset)
+                const isVisible = absOffset <= 2
+                const scale = absOffset === 0 ? 1 : absOffset === 1 ? 0.78 : 0.6
+                const translate = `calc(-50% + (${offset}) * min(46vw, 220px) + ${galleryDragOffset}px)`
+
+                return (
                   <div
-                    className="gallery-caption"
-                    onClick={(event) => {
-                      event.stopPropagation()
-                      setTapPaused(true)
+                    className={`gallery-card${absOffset === 0 ? ' active' : ''}`}
+                    key={item.title}
+                    style={{
+                      transform: `translateX(${translate}) scale(${scale})`,
+                      zIndex: count - absOffset,
+                      opacity: isVisible ? 1 - absOffset * 0.22 : 0,
+                      pointerEvents: isVisible ? 'auto' : 'none',
                     }}
-                    role="presentation"
                   >
-                    <h4>{item.title}</h4>
-                    <p>{item.description}</p>
+                    <button
+                      type="button"
+                      className="gallery-photo"
+                      onClick={() => handleGalleryCardClick(item)}
+                      aria-label={`Ver ${item.title}`}
+                    >
+                      <img src={item.source} alt={`Almán La Finca: ${item.title}`} draggable="false" />
+                    </button>
+                    <div className="gallery-caption">
+                      <h4>{item.title}</h4>
+                      <p>{item.description}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
+          </div>
+          <div className="gallery-dots">
+            {galleryItems.map((item, index) => (
+              <button
+                type="button"
+                key={item.title}
+                className={`gallery-dot${index === galleryIndex ? ' active' : ''}`}
+                aria-label={`Ir a ${item.title}`}
+                onClick={() => setGalleryIndex(index)}
+              />
+            ))}
           </div>
           {lightbox ? (
             <div className="gallery-lightbox open" onClick={() => setLightbox(null)} role="presentation">
@@ -918,7 +995,7 @@ function App() {
           <div className="wrap">
             <div className="menu-head">
               <div className="eyebrow">¿Llegas más tarde?</div>
-              <h2>Pedido Anticipado</h2>
+              <h2>Orden anticipada</h2>
               <p>Arma tu pedido desde aquí, paga por transferencia y lo tenemos listo justo a tiempo.</p>
               <p className="order-lead-note">Realizalo con al menos 1 hora de anticipación.</p>
             </div>
@@ -1013,6 +1090,27 @@ function App() {
                       {mode}
                     </button>
                   ))}
+                </div>
+              </div>
+
+              <div className="order-eta order-people">
+                <span>¿Cuántas personas son?</span>
+                <div className="order-qty">
+                  <button
+                    type="button"
+                    onClick={() => setGuestCount((current) => Math.max(1, current - 1))}
+                    aria-label="Restar persona"
+                  >
+                    −
+                  </button>
+                  <span>{guestCount}</span>
+                  <button
+                    type="button"
+                    onClick={() => setGuestCount((current) => Math.min(20, current + 1))}
+                    aria-label="Sumar persona"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
 
