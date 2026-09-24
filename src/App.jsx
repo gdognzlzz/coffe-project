@@ -819,7 +819,6 @@ function App() {
             </div>
             <div className="about-text reveal">
               <div className="eyebrow">Nosotros</div>
-              <h2>Almán, La Finca</h2>
               <p>
                 Somos un espacio pensado para quedarse: madera cálida, luz natural y el aroma constante de café recién molido. Trabajamos grano 100% arábiga de altura, tostado con cuidado, para llevar a tu taza el sabor de las montañas de Veracruz.
               </p>
