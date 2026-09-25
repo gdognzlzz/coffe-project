@@ -748,7 +748,7 @@ function App() {
 
     message += 'Pagaré por transferencia, ¿me pueden compartir los datos?'
 
-    const whatsappUrl = `https://wa.me/527717724153?text=${encodeURIComponent(message)}`
+    const whatsappUrl = `https://wa.me/527714423130?text=${encodeURIComponent(message)}`
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
   }
 
