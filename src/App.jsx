@@ -1019,7 +1019,7 @@ function App() {
           <div className="wrap">
             <div className="menu-head">
               <div className="eyebrow">¿Llegas más tarde?</div>
-              <h2>Ordena ahora</h2>
+              <h2>Orden anticipada</h2>
               <p>Arma tu pedido desde aquí, paga por transferencia y lo tenemos listo justo a tiempo.</p>
               <p className="order-lead-note">Realizalo con al menos 1 hora de anticipación.</p>
             </div>
