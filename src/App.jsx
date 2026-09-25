@@ -1026,6 +1026,45 @@ function App() {
             <div className="menu-divider" />
 
             <div className="order-box">
+              <div className="order-eta">
+                <span>¿Para comer aquí o para llevar?</span>
+                <div className="order-eta-options">
+                  {['Para comer aquí', 'Para llevar'].map((mode) => (
+                    <button
+                      type="button"
+                      className={`eta-btn${orderMode === mode ? ' active' : ''}`}
+                      key={mode}
+                      onClick={() => setOrderMode(mode)}
+                    >
+                      {mode}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {orderMode === 'Para comer aquí' ? (
+                <div className="order-eta order-people">
+                  <span>¿Cuántas personas son?</span>
+                  <div className="order-qty">
+                    <button
+                      type="button"
+                      onClick={() => setGuestCount((current) => Math.max(1, current - 1))}
+                      aria-label="Restar persona"
+                    >
+                      −
+                    </button>
+                    <span>{guestCount}</span>
+                    <button
+                      type="button"
+                      onClick={() => setGuestCount((current) => Math.min(20, current + 1))}
+                      aria-label="Sumar persona"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              ) : null}
+
               <div className="order-picker">
                 <select
                   value={orderCategory}
@@ -1100,45 +1139,6 @@ function App() {
                 <span>Total</span>
                 <span>${total}</span>
               </div>
-
-              <div className="order-eta">
-                <span>¿Para comer aquí o para llevar?</span>
-                <div className="order-eta-options">
-                  {['Para comer aquí', 'Para llevar'].map((mode) => (
-                    <button
-                      type="button"
-                      className={`eta-btn${orderMode === mode ? ' active' : ''}`}
-                      key={mode}
-                      onClick={() => setOrderMode(mode)}
-                    >
-                      {mode}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {orderMode === 'Para comer aquí' ? (
-                <div className="order-eta order-people">
-                  <span>¿Cuántas personas son?</span>
-                  <div className="order-qty">
-                    <button
-                      type="button"
-                      onClick={() => setGuestCount((current) => Math.max(1, current - 1))}
-                      aria-label="Restar persona"
-                    >
-                      −
-                    </button>
-                    <span>{guestCount}</span>
-                    <button
-                      type="button"
-                      onClick={() => setGuestCount((current) => Math.min(20, current + 1))}
-                      aria-label="Sumar persona"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-              ) : null}
 
               <input
                 type="text"
