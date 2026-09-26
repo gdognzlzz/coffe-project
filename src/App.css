@@ -238,8 +238,8 @@
   align-items: center;
   justify-content: center;
   width: 128px;
-  height: 128px;
-  margin: 1.8rem auto 0;
+  height: 54px;
+  margin: 1rem auto 0;
   background: var(--cream);
   color: var(--espresso);
   font-family: var(--sans);
