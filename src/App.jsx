@@ -801,12 +801,6 @@ function App() {
               />
             ))}
           </div>
-          <a href="#pedido" className="hero-sign" aria-label="Ordena ahora">
-            <span>Ordena</span>
-            <span className="hero-sign-divider" aria-hidden="true" />
-            <span>ahora</span>
-          </a>
-
           <div className="hero-inner">
             <h1 className="hero-title">Almán</h1>
             <div className="hero-sub">La Finca</div>
