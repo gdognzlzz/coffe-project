@@ -234,38 +234,73 @@
 }
 
 .hero-sign {
-  display: inline-block;
-  margin: 2.2rem auto 0;
-  padding: 0.9rem 2.4rem;
-  border-radius: 4px;
+  position: absolute;
+  top: 5.2rem;
+  left: -1.4rem;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.1em;
+  width: clamp(150px, 30vw, 210px);
+  height: clamp(140px, 22vw, 185px);
+  padding: 1.4rem 1.6rem 1.6rem 1.9rem;
   background: var(--cream);
   color: var(--espresso);
   font-family: var(--sans);
-  font-weight: 600;
-  font-size: 1rem;
-  letter-spacing: 0.05em;
+  font-weight: 700;
+  font-size: clamp(1.05rem, 3.4vw, 1.3rem);
+  line-height: 1.15;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
   text-decoration: none;
-  border: 1px solid rgba(36, 18, 9, 0.15);
-  box-shadow: 0 16px 34px -12px rgba(0, 0, 0, 0.5);
+  box-shadow: 6px 10px 24px -8px rgba(0, 0, 0, 0.55);
+  clip-path: polygon(
+    0% 0%,
+    92% 0%,
+    100% 9%,
+    89% 16%,
+    100% 23%,
+    90% 30%,
+    100% 37%,
+    88% 44%,
+    100% 51%,
+    91% 58%,
+    100% 65%,
+    89% 72%,
+    100% 79%,
+    90% 86%,
+    100% 93%,
+    68% 100%,
+    0% 100%
+  );
   opacity: 0;
   animation: riseInSign 1s ease 1.4s forwards;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .hero-sign:hover {
-  transform: rotate(-1.5deg) translateY(-3px);
-  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.55);
+  transform: rotate(-3deg) translateY(-3px);
+  box-shadow: 8px 14px 28px -8px rgba(0, 0, 0, 0.6);
 }
 
 @keyframes riseInSign {
   from {
     opacity: 0;
-    transform: translateY(22px) rotate(-1.5deg);
+    transform: translateY(22px) rotate(-3deg);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0) rotate(-1.5deg);
+    transform: translateY(0) rotate(-3deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-sign {
+    top: 4.6rem;
+    left: -1.2rem;
   }
 }
 
