@@ -240,60 +240,55 @@
   z-index: 5;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  gap: 0.1em;
+  gap: 0.5em;
   width: clamp(150px, 30vw, 210px);
   height: clamp(140px, 22vw, 185px);
-  padding: 1.4rem 1.6rem 1.6rem 1.9rem;
+  padding: 1.4rem 1.2rem;
   background: var(--cream);
   color: var(--espresso);
-  font-family: var(--sans);
-  font-weight: 700;
-  font-size: clamp(1.05rem, 3.4vw, 1.3rem);
-  line-height: 1.15;
-  letter-spacing: 0.03em;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(1rem, 3.2vw, 1.2rem);
+  line-height: 1.2;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+  text-align: center;
   text-decoration: none;
-  box-shadow: 6px 10px 24px -8px rgba(0, 0, 0, 0.55);
-  clip-path: polygon(
-    0% 0%,
-    92% 0%,
-    100% 9%,
-    89% 16%,
-    100% 23%,
-    90% 30%,
-    100% 37%,
-    88% 44%,
-    100% 51%,
-    91% 58%,
-    100% 65%,
-    89% 72%,
-    100% 79%,
-    90% 86%,
-    100% 93%,
-    68% 100%,
-    0% 100%
-  );
+  border: 2px solid var(--espresso);
+  box-shadow:
+    0 0 0 5px var(--cream),
+    0 0 0 7px var(--espresso),
+    6px 10px 24px -8px rgba(0, 0, 0, 0.55);
   opacity: 0;
   animation: riseInSign 1s ease 1.4s forwards;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: box-shadow 0.25s ease;
+}
+
+.hero-sign-divider {
+  display: block;
+  width: 2.4em;
+  height: 2px;
+  background: var(--espresso);
 }
 
 .hero-sign:hover {
-  transform: rotate(-3deg) translateY(-3px);
-  box-shadow: 8px 14px 28px -8px rgba(0, 0, 0, 0.6);
+  box-shadow:
+    0 0 0 5px var(--cream),
+    0 0 0 7px var(--espresso),
+    8px 14px 28px -8px rgba(0, 0, 0, 0.6);
 }
 
 @keyframes riseInSign {
   from {
     opacity: 0;
-    transform: translateY(22px) rotate(-3deg);
+    transform: translateY(22px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0) rotate(-3deg);
+    transform: translateY(0);
   }
 }
 
@@ -303,6 +298,7 @@
     left: -1.2rem;
   }
 }
+
 
 @keyframes riseIn {
   from {

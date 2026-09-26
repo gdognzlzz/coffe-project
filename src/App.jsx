@@ -803,6 +803,7 @@ function App() {
           </div>
           <a href="#pedido" className="hero-sign" aria-label="Ordena ahora">
             <span>Ordena</span>
+            <span className="hero-sign-divider" aria-hidden="true" />
             <span>ahora</span>
           </a>
 
