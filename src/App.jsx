@@ -805,6 +805,9 @@ function App() {
             <h1 className="hero-title">Almán</h1>
             <div className="hero-sub">La Finca</div>
             <p className="hero-tag">Café y cocina de las altas montañas de Veracruz</p>
+            <a href="#pedido" className="hero-sign">
+              Ordena ahora
+            </a>
           </div>
           <div className="scroll-cue" aria-hidden="true">
             <span>Desliza</span>
