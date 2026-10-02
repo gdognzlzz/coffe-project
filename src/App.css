@@ -238,17 +238,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.7rem;
+  gap: 0.5rem;
   width: auto;
   height: auto;
   margin: 1rem auto 0;
-  padding: 1.05rem 2.6rem;
+  padding: 0.65rem 1.6rem;
   background: linear-gradient(160deg, #8c7a71 0%, #6f5d53 55%, #5c4a41 100%);
   color: #f6ecdd;
   font-family: var(--sans);
   font-weight: 700;
-  font-size: 1rem;
-  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   text-align: center;
   text-decoration: none;
@@ -272,8 +272,8 @@
 }
 
 .hero-sign-icon {
-  width: 1.2em;
-  height: 1.2em;
+  width: 1.05em;
+  height: 1.05em;
   flex-shrink: 0;
 }
 
