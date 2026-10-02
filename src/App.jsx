@@ -806,6 +806,12 @@ function App() {
             <div className="hero-sub">La Finca</div>
             <p className="hero-tag">Café y cocina de las altas montañas de Veracruz</p>
             <a href="#pedido" className="hero-sign">
+              <svg className="hero-sign-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M3 9h14v6a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9z" />
+                <path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17" />
+                <path d="M7 6c0-1 1-1 1-2s-1-1-1-2" />
+                <path d="M11 6c0-1 1-1 1-2s-1-1-1-2" />
+              </svg>
               Ordene ahora
             </a>
           </div>
