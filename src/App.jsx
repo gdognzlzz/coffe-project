@@ -450,25 +450,45 @@ function MenuCategory({ category, isOpen, onToggle }) {
     }
   }, [isOpen])
 
-  useEffect(() => {
+  // Keep the category header fixed in the viewport while the list's max-height animates.
+  useLayoutEffect(() => {
     const el = bodyRef.current
-    if (!el) {
+    if (el) {
+      el.style.maxHeight = isOpen ? `${el.scrollHeight}px` : ''
+    }
+
+    const prevTop = scrollFixRef.current
+    scrollFixRef.current = null
+    if (prevTop === null || !headRef.current) {
       return
     }
 
-    el.style.maxHeight = isOpen ? `${el.scrollHeight}px` : ''
-  }, [isOpen, showAll])
-
-  // Keep the category header fixed in the viewport when the list height changes.
-  useLayoutEffect(() => {
-    const prevTop = scrollFixRef.current
-    if (prevTop !== null && headRef.current) {
-      const delta = headRef.current.getBoundingClientRect().top - prevTop
-      if (delta !== 0) {
-        window.scrollBy(0, delta)
+    let rafId = null
+    const adjust = () => {
+      const headEl = headRef.current
+      if (headEl) {
+        const delta = headEl.getBoundingClientRect().top - prevTop
+        if (delta !== 0) {
+          window.scrollBy(0, delta)
+        }
       }
+      rafId = requestAnimationFrame(adjust)
     }
-    scrollFixRef.current = null
+    rafId = requestAnimationFrame(adjust)
+    // Match the CSS max-height transition duration (0.5s) plus a small margin.
+    const timeoutId = setTimeout(() => {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId)
+        rafId = null
+      }
+    }, 550)
+
+    return () => {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId)
+      }
+      clearTimeout(timeoutId)
+    }
   }, [isOpen, showAll])
 
   const visibleItems = showAll ? category.items : category.items.slice(0, 3)
