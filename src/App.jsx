@@ -417,7 +417,7 @@ const locationBadges = [
   ['Servicio', ['Pedidos desde el auto', 'Para llevar']],
   ['Aspectos destacados', ['Terraza', 'Buen café', 'Postres', 'Música en vivo']],
   ['Servicios', ['Wi‑Fi gratis', 'Estacionamiento gratuito', 'Pet friendly']],
-  ['Pagos', ['Pagos móviles NFC', 'Tarjetas de crédito', 'Tarjetas de débito', 'Efectivo']],
+  ['Pagos', ['Tarjeta', 'Efectivo']],
 ]
 
 function clamp(value, min, max) {
