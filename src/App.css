@@ -1535,6 +1535,14 @@ footer {
 }
 
 @media (max-width: 880px) {
+  .about,
+  .menu-section,
+  .order-section,
+  .gallery-section,
+  .location {
+    padding: 2.6rem 0;
+  }
+
   .about-grid,
   .loc-grid {
     grid-template-columns: 1fr;
