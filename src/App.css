@@ -732,7 +732,7 @@
 .menu-cat-body {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.5s ease;
+  transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .menu-note {
@@ -789,7 +789,7 @@
 .menu-more {
   display: block;
   width: 100%;
-  margin: 0.9rem 0 0;
+  margin: 0.35rem 0 0;
   padding: 0;
   background: none;
   border: none;
