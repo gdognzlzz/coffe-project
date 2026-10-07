@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
 import imagen1 from './assets/imagen-1.jpeg'
 import imagen2 from './assets/imagen-2.jpeg'
@@ -440,6 +440,8 @@ function createBeans(count) {
 
 function MenuCategory({ category, isOpen, onToggle }) {
   const bodyRef = useRef(null)
+  const moreRef = useRef(null)
+  const scrollFixRef = useRef(null)
   const [showAll, setShowAll] = useState(false)
 
   useEffect(() => {
@@ -457,8 +459,25 @@ function MenuCategory({ category, isOpen, onToggle }) {
     el.style.maxHeight = isOpen ? `${el.scrollHeight}px` : ''
   }, [isOpen, showAll])
 
+  // Keep the "Ver más" button fixed in the viewport when the list height changes.
+  useLayoutEffect(() => {
+    const prevTop = scrollFixRef.current
+    if (prevTop !== null && moreRef.current) {
+      const delta = moreRef.current.getBoundingClientRect().top - prevTop
+      if (delta !== 0) {
+        window.scrollBy(0, delta)
+      }
+    }
+    scrollFixRef.current = null
+  }, [showAll])
+
   const visibleItems = showAll ? category.items : category.items.slice(0, 3)
   const hasMore = category.items.length > 3
+
+  const handleToggleShowAll = () => {
+    scrollFixRef.current = moreRef.current ? moreRef.current.getBoundingClientRect().top : null
+    setShowAll((prev) => !prev)
+  }
 
   return (
     <div className={`menu-cat${isOpen ? ' open' : ''}`}>
@@ -491,8 +510,9 @@ function MenuCategory({ category, isOpen, onToggle }) {
         {hasMore ? (
           <button
             type="button"
+            ref={moreRef}
             className="menu-more"
-            onClick={() => setShowAll((prev) => !prev)}
+            onClick={handleToggleShowAll}
           >
             {showAll ? 'Ver menos' : 'Ver más'}
           </button>
