@@ -785,6 +785,26 @@
   white-space: nowrap;
 }
 
+.menu-more {
+  display: block;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  color: var(--gold);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.menu-more:hover {
+  color: var(--wood);
+}
+
 .menu-addon {
   margin-top: 0.6rem;
   padding: 0.9rem 1.1rem;

@@ -440,6 +440,13 @@ function createBeans(count) {
 
 function MenuCategory({ category, isOpen, onToggle }) {
   const bodyRef = useRef(null)
+  const [showAll, setShowAll] = useState(false)
+
+  useEffect(() => {
+    if (!isOpen) {
+      setShowAll(false)
+    }
+  }, [isOpen])
 
   useEffect(() => {
     const el = bodyRef.current
@@ -448,7 +455,10 @@ function MenuCategory({ category, isOpen, onToggle }) {
     }
 
     el.style.maxHeight = isOpen ? `${el.scrollHeight}px` : ''
-  }, [isOpen])
+  }, [isOpen, showAll])
+
+  const visibleItems = showAll ? category.items : category.items.slice(0, 3)
+  const hasMore = category.items.length > 3
 
   return (
     <div className={`menu-cat${isOpen ? ' open' : ''}`}>
@@ -468,7 +478,7 @@ function MenuCategory({ category, isOpen, onToggle }) {
       <div className="menu-cat-body" ref={bodyRef}>
         {category.note ? <div className="menu-note">{category.note}</div> : null}
         <div className="menu-list">
-          {category.items.map((item) => (
+          {visibleItems.map((item) => (
             <div className="menu-item" key={`${category.id}-${item.n}`}>
               <div>
                 <span className="name">{item.n}</span>
@@ -478,6 +488,15 @@ function MenuCategory({ category, isOpen, onToggle }) {
             </div>
           ))}
         </div>
+        {hasMore ? (
+          <button
+            type="button"
+            className="menu-more"
+            onClick={() => setShowAll((prev) => !prev)}
+          >
+            {showAll ? 'Ver menos' : 'Ver más'}
+          </button>
+        ) : null}
         {category.addon ? <div className="menu-addon">{category.addon}</div> : null}
       </div>
     </div>
