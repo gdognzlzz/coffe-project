@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
 import imagen1 from './assets/imagen-1.jpeg'
 import imagen2 from './assets/imagen-2.jpeg'
@@ -460,13 +460,13 @@ function MenuCategory({ category, isOpen, onToggle }) {
   }, [isOpen, showAll])
 
   // If the header scrolled out of view while the category was open (e.g. the user
-  // scrolled deep into a long list), bring it back so collapsing doesn't land on
-  // an unrelated section below.
-  useEffect(() => {
+  // scrolled deep into a long list), snap back before the collapse paints so there's
+  // no visible flash of whatever section sits below.
+  useLayoutEffect(() => {
     if (wasOpenRef.current && !isOpen && headRef.current) {
       const top = headRef.current.getBoundingClientRect().top
       if (top < 0) {
-        headRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        headRef.current.scrollIntoView({ behavior: 'instant', block: 'start' })
       }
     }
     wasOpenRef.current = isOpen
