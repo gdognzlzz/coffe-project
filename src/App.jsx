@@ -440,7 +440,7 @@ function createBeans(count) {
 
 function MenuCategory({ category, isOpen, onToggle }) {
   const bodyRef = useRef(null)
-  const moreRef = useRef(null)
+  const headRef = useRef(null)
   const scrollFixRef = useRef(null)
   const [showAll, setShowAll] = useState(false)
 
@@ -459,32 +459,48 @@ function MenuCategory({ category, isOpen, onToggle }) {
     el.style.maxHeight = isOpen ? `${el.scrollHeight}px` : ''
   }, [isOpen, showAll])
 
-  // Keep the "Ver más" button fixed in the viewport when the list height changes.
+  // Keep the category header fixed in the viewport when the list height changes.
   useLayoutEffect(() => {
     const prevTop = scrollFixRef.current
-    if (prevTop !== null && moreRef.current) {
-      const delta = moreRef.current.getBoundingClientRect().top - prevTop
+    if (prevTop !== null && headRef.current) {
+      const delta = headRef.current.getBoundingClientRect().top - prevTop
       if (delta !== 0) {
         window.scrollBy(0, delta)
       }
     }
     scrollFixRef.current = null
-  }, [showAll])
+  }, [isOpen, showAll])
 
   const visibleItems = showAll ? category.items : category.items.slice(0, 3)
   const hasMore = category.items.length > 3
 
+  const captureScrollAnchor = () => {
+    scrollFixRef.current = headRef.current ? headRef.current.getBoundingClientRect().top : null
+  }
+
+  const handleHeadClick = () => {
+    captureScrollAnchor()
+    onToggle()
+  }
+
   const handleToggleShowAll = () => {
-    scrollFixRef.current = moreRef.current ? moreRef.current.getBoundingClientRect().top : null
-    setShowAll((prev) => !prev)
+    captureScrollAnchor()
+    if (showAll) {
+      // "Ver menos" collapses the whole category, including the first 3 items.
+      setShowAll(false)
+      onToggle()
+    } else {
+      setShowAll(true)
+    }
   }
 
   return (
     <div className={`menu-cat${isOpen ? ' open' : ''}`}>
       <button
         type="button"
+        ref={headRef}
         className="menu-cat-head"
-        onClick={onToggle}
+        onClick={handleHeadClick}
         aria-expanded={isOpen}
       >
         <span className="bean-ico" aria-hidden="true" />
@@ -510,7 +526,6 @@ function MenuCategory({ category, isOpen, onToggle }) {
         {hasMore ? (
           <button
             type="button"
-            ref={moreRef}
             className="menu-more"
             onClick={handleToggleShowAll}
           >
