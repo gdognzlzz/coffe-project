@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
 import imagen1 from './assets/imagen-1.jpeg'
 import imagen2 from './assets/imagen-2.jpeg'
@@ -441,7 +441,7 @@ function createBeans(count) {
 function MenuCategory({ category, isOpen, onToggle }) {
   const bodyRef = useRef(null)
   const headRef = useRef(null)
-  const scrollFixRef = useRef(null)
+  const wasOpenRef = useRef(isOpen)
   const [showAll, setShowAll] = useState(false)
 
   useEffect(() => {
@@ -450,61 +450,32 @@ function MenuCategory({ category, isOpen, onToggle }) {
     }
   }, [isOpen])
 
-  // Keep the category header fixed in the viewport while the list's max-height animates.
-  useLayoutEffect(() => {
+  useEffect(() => {
     const el = bodyRef.current
-    if (el) {
-      el.style.maxHeight = isOpen ? `${el.scrollHeight}px` : ''
-    }
-
-    const prevTop = scrollFixRef.current
-    scrollFixRef.current = null
-    if (prevTop === null || !headRef.current) {
+    if (!el) {
       return
     }
 
-    let rafId = null
-    const adjust = () => {
-      const headEl = headRef.current
-      if (headEl) {
-        const delta = headEl.getBoundingClientRect().top - prevTop
-        if (delta !== 0) {
-          window.scrollBy(0, delta)
-        }
-      }
-      rafId = requestAnimationFrame(adjust)
-    }
-    rafId = requestAnimationFrame(adjust)
-    // Match the CSS max-height transition duration (0.5s) plus a small margin.
-    const timeoutId = setTimeout(() => {
-      if (rafId !== null) {
-        cancelAnimationFrame(rafId)
-        rafId = null
-      }
-    }, 550)
-
-    return () => {
-      if (rafId !== null) {
-        cancelAnimationFrame(rafId)
-      }
-      clearTimeout(timeoutId)
-    }
+    el.style.maxHeight = isOpen ? `${el.scrollHeight}px` : ''
   }, [isOpen, showAll])
+
+  // If the header scrolled out of view while the category was open (e.g. the user
+  // scrolled deep into a long list), bring it back so collapsing doesn't land on
+  // an unrelated section below.
+  useEffect(() => {
+    if (wasOpenRef.current && !isOpen && headRef.current) {
+      const top = headRef.current.getBoundingClientRect().top
+      if (top < 0) {
+        headRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }
+    wasOpenRef.current = isOpen
+  }, [isOpen])
 
   const visibleItems = showAll ? category.items : category.items.slice(0, 3)
   const hasMore = category.items.length > 3
 
-  const captureScrollAnchor = () => {
-    scrollFixRef.current = headRef.current ? headRef.current.getBoundingClientRect().top : null
-  }
-
-  const handleHeadClick = () => {
-    captureScrollAnchor()
-    onToggle()
-  }
-
   const handleToggleShowAll = () => {
-    captureScrollAnchor()
     if (showAll) {
       // "Ver menos" collapses the whole category, including the first 3 items.
       setShowAll(false)
@@ -520,7 +491,7 @@ function MenuCategory({ category, isOpen, onToggle }) {
         type="button"
         ref={headRef}
         className="menu-cat-head"
-        onClick={handleHeadClick}
+        onClick={onToggle}
         aria-expanded={isOpen}
       >
         <span className="bean-ico" aria-hidden="true" />

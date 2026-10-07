@@ -676,6 +676,7 @@
   font-size: clamp(1.05rem, 2vw, 1.28rem);
   color: var(--wood);
   transition: color 0.25s ease;
+  scroll-margin-top: 80px;
 }
 
 .menu-cat-head:hover {
@@ -731,7 +732,6 @@
 .menu-cat-body {
   max-height: 0;
   overflow: hidden;
-  overflow-anchor: none;
   transition: max-height 0.5s ease;
 }
 
