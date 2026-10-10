@@ -1248,7 +1248,13 @@ function App() {
                   <li>
                     <span>Whatsapp / Llamada</span>
                     <span>
-                      <a href="tel:7717724153">771 772 4153</a>
+                      <a
+                        href="https://wa.me/527714423130?text=Hola%2C%20me%20gustar%C3%ADa%20hacer%20una%20reservaci%C3%B3n.%20%C2%BFMe%20podr%C3%ADan%20compartir%20los%20horarios%20disponibles%3F"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        771 442 3130
+                      </a>
                     </span>
                   </li>
                 </ul>
