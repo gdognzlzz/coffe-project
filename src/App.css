@@ -488,7 +488,7 @@
 .about {
   background: var(--paper);
   position: relative;
-  padding: 4.5rem 0 4rem;
+  padding: 3rem 0;
   overflow: hidden;
 }
 
@@ -598,7 +598,7 @@
 
 .menu-section {
   background: var(--cream-2);
-  padding: 4rem 0;
+  padding: 2.75rem 0;
   position: relative;
   overflow: hidden;
 }
@@ -822,7 +822,7 @@
 
 .order-section {
   background: var(--paper);
-  padding: 4rem 0;
+  padding: 2.75rem 0;
 }
 
 .order-section .menu-head .eyebrow {
@@ -1096,7 +1096,7 @@
 
 .location {
   background: var(--paper);
-  padding: 4rem 0;
+  padding: 2.75rem 0;
 }
 
 .loc-grid {
@@ -1208,7 +1208,7 @@
 }
 
 .gallery-section {
-  padding: 4rem 0;
+  padding: 2.75rem 0;
   background: var(--paper);
   overflow: hidden;
 }
@@ -1564,7 +1564,7 @@ footer {
   .order-section,
   .gallery-section,
   .location {
-    padding: 2.6rem 0;
+    padding: 2rem 0;
   }
 
   .about-grid,
