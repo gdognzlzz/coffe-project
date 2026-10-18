@@ -1526,11 +1526,11 @@ footer {
 
 @media (max-width: 640px) {
   .gallery-card {
-    width: min(72vw, 260px);
+    width: min(62vw, 230px);
   }
 
   .gallery-photo {
-    height: 240px;
+    height: 200px;
   }
 
   .gallery-track {
