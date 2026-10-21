@@ -1561,16 +1561,20 @@ footer {
 }
 
 @media (max-width: 880px) {
+  .cup-section {
+    height: 200vh;
+  }
+
   .about,
   .menu-section,
   .order-section,
   .gallery-section,
   .location {
-    padding: 2rem 0;
+    padding: 1.5rem 0;
   }
 
   .gallery-section {
-    padding-bottom: 1.25rem;
+    padding-bottom: 1rem;
   }
 
   .about-grid,
