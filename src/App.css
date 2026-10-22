@@ -107,6 +107,10 @@
   background: var(--cream);
 }
 
+.section-tabs {
+  display: none;
+}
+
 .nav.scrolled .nav-toggle span {
   background: var(--espresso);
 }
@@ -1565,6 +1569,41 @@ footer {
 }
 
 @media (max-width: 880px) {
+  .section-tabs {
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    z-index: 190;
+    display: flex;
+    gap: 1.5rem;
+    padding: 0 6vw;
+    overflow-x: auto;
+    background: rgba(250, 243, 231, 0.96);
+    border-bottom: 1px solid rgba(107, 66, 38, 0.18);
+    box-shadow: 0 6px 14px -14px rgba(36, 18, 9, 0.55);
+    scrollbar-width: none;
+  }
+
+  .section-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .section-tabs a {
+    flex: 0 0 auto;
+    padding: 0.7rem 0 0.6rem;
+    border-bottom: 3px solid transparent;
+    color: var(--wood-light);
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .section-tabs a.active {
+    border-bottom-color: var(--espresso);
+    color: var(--espresso);
+  }
+
   .about,
   .menu-section,
   .order-section,

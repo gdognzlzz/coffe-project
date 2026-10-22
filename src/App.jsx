@@ -532,6 +532,7 @@ function MenuCategory({ category, isOpen, onToggle }) {
 function App() {
   const [navOpen, setNavOpen] = useState(false)
   const [navScrolled, setNavScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState('inicio')
   const [openCategory, setOpenCategory] = useState(null)
   const [orderCategory, setOrderCategory] = useState(menuData[0].id)
   const [orderItemIndex, setOrderItemIndex] = useState(0)
@@ -626,6 +627,28 @@ function App() {
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('resize', handleScroll)
     }
+  }, [])
+
+  useEffect(() => {
+    const sections = ['inicio', 'nosotros', 'galeria', 'menu', 'pedido', 'ubicacion']
+      .map((id) => document.getElementById(id))
+      .filter(Boolean)
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSection = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+
+        if (visibleSection) {
+          setActiveSection(visibleSection.target.id)
+        }
+      },
+      { rootMargin: '-125px 0px -55%', threshold: [0.1, 0.5] },
+    )
+
+    sections.forEach((section) => observer.observe(section))
+    return () => observer.disconnect()
   }, [])
 
   useEffect(() => {
@@ -833,6 +856,26 @@ function App() {
           <span />
           <span />
         </button>
+      </nav>
+
+      <nav className="section-tabs" aria-label="Secciones de la página">
+        {[
+          ['inicio', 'Inicio'],
+          ['nosotros', 'Nosotros'],
+          ['galeria', 'Café'],
+          ['menu', 'Menú'],
+          ['pedido', 'Ordena'],
+          ['ubicacion', 'Detalles'],
+        ].map(([id, label]) => (
+          <a
+            className={activeSection === id ? 'active' : ''}
+            href={`#${id}`}
+            key={id}
+            onClick={() => setActiveSection(id)}
+          >
+            {label}
+          </a>
+        ))}
       </nav>
 
       <main>
