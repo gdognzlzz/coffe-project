@@ -1570,18 +1570,19 @@ footer {
 
 @media (max-width: 880px) {
   .section-tabs {
-    position: fixed;
-    top: 72px;
-    left: 0;
-    right: 0;
+    position: sticky;
+    top: 62px;
     z-index: 190;
     display: flex;
-    gap: 1.5rem;
-    padding: 0 6vw;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin: 0.65rem 4vw 1.25rem;
+    padding: 0 0.85rem;
     overflow-x: auto;
     background: rgba(250, 243, 231, 0.96);
-    border-bottom: 1px solid rgba(107, 66, 38, 0.18);
-    box-shadow: 0 6px 14px -14px rgba(36, 18, 9, 0.55);
+    border: 1px solid rgba(107, 66, 38, 0.14);
+    border-radius: 14px;
+    box-shadow: 0 10px 24px -18px rgba(36, 18, 9, 0.65);
     scrollbar-width: none;
   }
 
@@ -1591,10 +1592,10 @@ footer {
 
   .section-tabs a {
     flex: 0 0 auto;
-    padding: 0.7rem 0 0.6rem;
+    padding: 0.65rem 0 0.55rem;
     border-bottom: 3px solid transparent;
     color: var(--wood-light);
-    font-size: 0.8rem;
+    font-size: 0.76rem;
     font-weight: 500;
     line-height: 1.2;
   }

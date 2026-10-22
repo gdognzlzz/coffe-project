@@ -858,26 +858,6 @@ function App() {
         </button>
       </nav>
 
-      <nav className="section-tabs" aria-label="Secciones de la página">
-        {[
-          ['inicio', 'Inicio'],
-          ['nosotros', 'Nosotros'],
-          ['galeria', 'Café'],
-          ['menu', 'Menú'],
-          ['pedido', 'Ordena'],
-          ['ubicacion', 'Detalles'],
-        ].map(([id, label]) => (
-          <a
-            className={activeSection === id ? 'active' : ''}
-            href={`#${id}`}
-            key={id}
-            onClick={() => setActiveSection(id)}
-          >
-            {label}
-          </a>
-        ))}
-      </nav>
-
       <main>
         <section className="hero" id="inicio">
           <div className="beans-layer" aria-hidden="true">
@@ -908,6 +888,25 @@ function App() {
             <div className="scroll-line" />
           </div>
         </section>
+
+        <nav className="section-tabs" aria-label="Secciones de la página">
+          {[
+            ['nosotros', 'Nosotros'],
+            ['galeria', 'Café'],
+            ['menu', 'Menú'],
+            ['pedido', 'Ordena'],
+            ['ubicacion', 'Detalles'],
+          ].map(([id, label]) => (
+            <a
+              className={activeSection === id ? 'active' : ''}
+              href={`#${id}`}
+              key={id}
+              onClick={() => setActiveSection(id)}
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
 
         <section className="cup-section" id="cupSection" ref={cupSectionRef}>
           <div className="cup-sticky">
