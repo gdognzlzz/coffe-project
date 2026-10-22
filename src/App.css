@@ -823,7 +823,7 @@
 
 .order-section {
   background: var(--paper);
-  padding: 2.75rem 0;
+  padding: 2rem 0;
 }
 
 .order-section .menu-head .eyebrow {
@@ -845,7 +845,7 @@
   background: var(--cream);
   border: 1px solid rgba(107, 66, 38, 0.2);
   border-radius: 10px;
-  padding: 2.2rem 2rem;
+  padding: 1.6rem 1.5rem;
   box-shadow: var(--shadow);
 }
 

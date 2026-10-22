@@ -1077,7 +1077,6 @@ function App() {
               <p>Arma tu pedido desde aquí, paga por transferencia y lo tenemos listo justo a tiempo.</p>
               <p className="order-lead-note">Realizalo con al menos 1 hora de anticipación.</p>
             </div>
-            <div className="menu-divider" />
 
             <div className="order-box">
               <div className="order-eta">
