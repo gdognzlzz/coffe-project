@@ -533,6 +533,7 @@ function App() {
   const [navOpen, setNavOpen] = useState(false)
   const [navScrolled, setNavScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('inicio')
+  const [tabsVisible, setTabsVisible] = useState(false)
   const [openCategory, setOpenCategory] = useState(null)
   const [orderCategory, setOrderCategory] = useState(menuData[0].id)
   const [orderItemIndex, setOrderItemIndex] = useState(0)
@@ -569,6 +570,7 @@ function App() {
   useEffect(() => {
     const handleScroll = () => {
       setNavScrolled(window.scrollY > 60)
+      setTabsVisible(window.scrollY > 80)
 
       const section = cupSectionRef.current
       if (!section) {
@@ -889,7 +891,7 @@ function App() {
           </div>
         </section>
 
-        <nav className="section-tabs" aria-label="Secciones de la página">
+        <nav className={`section-tabs${tabsVisible ? ' visible' : ''}`} aria-label="Secciones de la página">
           {[
             ['nosotros', 'Nosotros'],
             ['galeria', 'Café'],

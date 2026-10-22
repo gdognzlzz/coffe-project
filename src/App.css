@@ -1570,13 +1570,15 @@ footer {
 
 @media (max-width: 880px) {
   .section-tabs {
-    position: sticky;
-    top: 62px;
+    position: fixed;
+    top: 72px;
+    left: 4vw;
+    right: 4vw;
     z-index: 190;
     display: flex;
     justify-content: space-between;
     gap: 0.5rem;
-    margin: 0.65rem 4vw 1.25rem;
+    margin: 0;
     padding: 0 0.85rem;
     overflow-x: auto;
     background: rgba(250, 243, 231, 0.96);
@@ -1584,6 +1586,16 @@ footer {
     border-radius: 14px;
     box-shadow: 0 10px 24px -18px rgba(36, 18, 9, 0.65);
     scrollbar-width: none;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-0.75rem);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .section-tabs.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
   }
 
   .section-tabs::-webkit-scrollbar {
