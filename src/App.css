@@ -1020,6 +1020,10 @@
   gap: 0.7rem;
 }
 
+.order-box > .order-eta:first-child {
+  margin-top: 0;
+}
+
 .order-eta > span {
   font-family: var(--sans);
   font-size: 0.85rem;
