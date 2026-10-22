@@ -532,7 +532,7 @@ function MenuCategory({ category, isOpen, onToggle }) {
 function App() {
   const [navOpen, setNavOpen] = useState(false)
   const [navScrolled, setNavScrolled] = useState(false)
-  const [openCategory, setOpenCategory] = useState(menuData[0].id)
+  const [openCategory, setOpenCategory] = useState(null)
   const [orderCategory, setOrderCategory] = useState(menuData[0].id)
   const [orderItemIndex, setOrderItemIndex] = useState(0)
   const [quantity, setQuantity] = useState(1)
@@ -1039,21 +1039,6 @@ function App() {
               <h2>Menú</h2>
             </div>
             <div className="menu-divider" />
-
-            <div className="menu-category-nav" role="tablist" aria-label="Categorías del menú">
-              {menuData.map((category) => (
-                <button
-                  type="button"
-                  className={`menu-category-tab${openCategory === category.id ? ' active' : ''}`}
-                  key={category.id}
-                  role="tab"
-                  aria-selected={openCategory === category.id}
-                  onClick={() => setOpenCategory(category.id)}
-                >
-                  {category.label}
-                </button>
-              ))}
-            </div>
 
             <div className="menu-accordion">
               <div className="menu-col">
