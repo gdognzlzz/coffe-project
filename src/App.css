@@ -356,7 +356,8 @@
 .cup-sticky {
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 100svh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1643,6 +1644,12 @@ footer {
 
   .nav-toggle {
     display: flex;
+  }
+}
+
+@media (max-width: 640px) {
+  .cup-section {
+    height: 125vh;
   }
 }
 
