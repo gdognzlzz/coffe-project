@@ -1282,7 +1282,7 @@
 
 .gallery-track {
   position: relative;
-  height: 450px;
+  height: 500px;
   cursor: grab;
   touch-action: pan-y;
   user-select: none;
@@ -1566,7 +1566,7 @@ footer {
 
   .gallery-track {
     --gallery-step: min(40vw, 155px);
-    height: 390px;
+    height: 420px;
   }
 
   .gallery-arrow {
@@ -1587,7 +1587,7 @@ footer {
 
   .gallery-track {
     --gallery-step: min(24vw, 170px);
-    height: 380px;
+    height: 420px;
   }
 }
 
