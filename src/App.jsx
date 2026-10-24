@@ -1037,7 +1037,7 @@ function App() {
                   offset += count
                 }
                 const absOffset = Math.abs(offset)
-                const isVisible = absOffset <= 2
+                const isVisible = absOffset === 0
                 const scale = absOffset === 0 ? 1 : absOffset === 1 ? 0.78 : 0.6
                 const translate = `calc(-50% + (${offset}) * var(--gallery-step) + ${galleryDragOffset}px)`
 
