@@ -568,6 +568,8 @@ function App() {
   const navRef = useRef(null)
   const galleryViewportRef = useRef(null)
   const galleryDragRef = useRef({ startX: 0, offset: 0, moved: false, dragging: false })
+  const sectionNavigationRef = useRef(false)
+  const sectionNavigationTimeoutRef = useRef(null)
 
   const selectedCategory = menuData.find((category) => category.id === orderCategory) || menuData[0]
   const selectedItem = selectedCategory.items[orderItemIndex] || selectedCategory.items[0]
@@ -576,6 +578,12 @@ function App() {
     const handleScroll = () => {
       setNavScrolled(window.scrollY > 60)
       setTabsVisible(window.scrollY > 80)
+      if (sectionNavigationRef.current) {
+        window.clearTimeout(sectionNavigationTimeoutRef.current)
+        sectionNavigationTimeoutRef.current = window.setTimeout(() => {
+          sectionNavigationRef.current = false
+        }, 180)
+      }
 
       const section = cupSectionRef.current
       if (!section) {
@@ -631,6 +639,7 @@ function App() {
 
     return () => {
       observer.disconnect()
+      window.clearTimeout(sectionNavigationTimeoutRef.current)
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('resize', handleScroll)
     }
@@ -648,7 +657,9 @@ function App() {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
 
         if (visibleSection) {
-          setActiveSection(visibleSection.target.id)
+          if (!sectionNavigationRef.current) {
+            setActiveSection(visibleSection.target.id)
+          }
         }
       },
       { rootMargin: '-125px 0px -55%', threshold: [0.1, 0.5] },
@@ -657,6 +668,11 @@ function App() {
     sections.forEach((section) => observer.observe(section))
     return () => observer.disconnect()
   }, [])
+
+  function handleSectionNavigation(id) {
+    sectionNavigationRef.current = true
+    setActiveSection(id)
+  }
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
@@ -941,7 +957,7 @@ function App() {
               className={activeSection === id ? 'active' : ''}
               href={`#${id}`}
               key={id}
-              onClick={() => setActiveSection(id)}
+              onClick={() => handleSectionNavigation(id)}
             >
               {label}
             </a>
