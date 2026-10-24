@@ -888,6 +888,20 @@ function App() {
         </button>
       </nav>
 
+      <a
+        className={`floating-cart${cart.length > 0 ? ' has-items' : ''}`}
+        href="#pedido"
+        aria-label={cart.length > 0 ? 'Ver pedido anticipado' : 'Ir a orden anticipada'}
+        onClick={() => setActiveSection('pedido')}
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.58h7.9a2 2 0 0 0 1.95-1.55L20.4 8H6.2" />
+          <circle cx="10" cy="20" r="1" />
+          <circle cx="17" cy="20" r="1" />
+        </svg>
+        <span className="floating-cart-indicator" aria-hidden="true" />
+      </a>
+
       <main>
         <section className="hero" id="inicio">
           <div className="beans-layer" aria-hidden="true">
