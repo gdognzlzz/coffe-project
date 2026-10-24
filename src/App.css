@@ -1761,6 +1761,11 @@ footer {
   .nav-toggle {
     display: flex;
   }
+
+  .nav-links,
+  .nav-toggle {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
