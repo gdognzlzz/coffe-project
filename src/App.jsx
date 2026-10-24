@@ -1054,6 +1054,8 @@ function App() {
                 const isVisible = absOffset <= 2
                 const scale = absOffset === 0 ? 1 : absOffset === 1 ? 0.78 : 0.6
                 const translate = `calc(-50% + (${offset}) * var(--gallery-step) + ${galleryDragOffset}px)`
+                const galleryLineId = `gallery-${item.title}`
+                const galleryQuantity = cart.find((line) => line.id === galleryLineId)?.qty || 0
 
                 return (
                   <div
@@ -1077,15 +1079,24 @@ function App() {
                     <div className="gallery-caption">
                       <h4>{item.title}</h4>
                       <p>{item.description}</p>
-                      <button
-                        type="button"
-                        className="gallery-add"
-                        aria-label={`Agregar ${item.title} a la orden`}
-                        onPointerDown={(event) => event.stopPropagation()}
-                        onClick={() => addGalleryItemToCart(item)}
-                      >
-                        +
-                      </button>
+                      <div className="order-qty gallery-qty" onPointerDown={(event) => event.stopPropagation()}>
+                        <button
+                          type="button"
+                          aria-label={`Quitar ${item.title} de la orden`}
+                          disabled={galleryQuantity === 0}
+                          onClick={() => updateCartLine(galleryLineId, -1)}
+                        >
+                          −
+                        </button>
+                        <span>{galleryQuantity}</span>
+                        <button
+                          type="button"
+                          aria-label={`Agregar ${item.title} a la orden`}
+                          onClick={() => addGalleryItemToCart(item)}
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )
