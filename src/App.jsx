@@ -698,7 +698,6 @@ function App() {
     galleryDragRef.current = { startX: event.clientX, offset: 0, moved: false, dragging: true }
     setGalleryDragging(true)
     event.currentTarget.setPointerCapture?.(event.pointerId)
-    event.preventDefault()
   }
 
   function handleGalleryPointerMove(event) {
@@ -706,11 +705,11 @@ function App() {
     if (!drag.dragging) {
       return
     }
-    event.preventDefault()
     const delta = event.clientX - drag.startX
     drag.offset = delta
     if (Math.abs(delta) > 6) {
       drag.moved = true
+      event.preventDefault()
     }
     setGalleryDragOffset(delta)
   }
