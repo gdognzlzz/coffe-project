@@ -1282,7 +1282,7 @@
 
 .gallery-track {
   position: relative;
-  height: 410px;
+  height: 450px;
   cursor: grab;
   touch-action: pan-y;
   user-select: none;
@@ -1387,6 +1387,29 @@
   line-height: 1.5;
   color: var(--espresso-2);
   opacity: 0.75;
+}
+
+.gallery-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: 0.75rem 0 0 auto;
+  border: 0;
+  border-radius: 50%;
+  background: var(--wood);
+  color: var(--cream);
+  font-family: var(--sans);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.gallery-add:hover {
+  background: var(--espresso);
+  transform: scale(1.08);
 }
 
 .gallery-lightbox {
@@ -1543,7 +1566,7 @@ footer {
 
   .gallery-track {
     --gallery-step: min(40vw, 155px);
-    height: 340px;
+    height: 390px;
   }
 
   .gallery-arrow {
@@ -1564,7 +1587,7 @@ footer {
 
   .gallery-track {
     --gallery-step: min(24vw, 170px);
-    height: 340px;
+    height: 380px;
   }
 }
 

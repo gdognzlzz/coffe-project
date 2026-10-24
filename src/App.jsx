@@ -365,27 +365,32 @@ const galleryItems = [
     title: 'Tueste Obscuro',
     description:
       'Notas intensas y achocolatadas, ideal para quienes buscan un café con cuerpo.',
+    price: 0,
     source: imagen5,
   },
   {
     title: 'Tueste Medio',
     description:
       'Equilibrado y aromático, con notas frutales de nuestra finca en Veracruz.',
+    price: 0,
     source: imagen6,
   },
   {
     title: 'Nuestra Finca',
     description: 'Café de altura cultivado a 1200 msnm por la familia Gaytán López.',
+    price: 0,
     source: imagen7,
   },
   {
     title: 'Grano Selecto',
     description: '100% arábiga, calidad exportación, cosechado y seleccionado a mano.',
+    price: 0,
     source: imagen8,
   },
   {
     title: 'En Almán La Finca',
     description: 'Un espacio pensado para disfrutar cada taza con calma.',
+    price: 0,
     source: imagen9,
   },
 ]
@@ -770,6 +775,29 @@ function App() {
     setQuantity(1)
   }
 
+  function addGalleryItemToCart(item) {
+    const lineId = `gallery-${item.title}`
+
+    setCart((current) => {
+      const existing = current.find((line) => line.id === lineId)
+      if (existing) {
+        return current.map((line) =>
+          line.id === lineId ? { ...line, qty: Math.min(20, line.qty + 1) } : line,
+        )
+      }
+
+      return [
+        ...current,
+        {
+          id: lineId,
+          name: item.title,
+          price: item.price,
+          qty: 1,
+        },
+      ]
+    })
+  }
+
   function updateCartLine(lineId, delta) {
     setCart((current) =>
       current
@@ -1035,6 +1063,15 @@ function App() {
                     <div className="gallery-caption">
                       <h4>{item.title}</h4>
                       <p>{item.description}</p>
+                      <button
+                        type="button"
+                        className="gallery-add"
+                        aria-label={`Agregar ${item.title} a la orden`}
+                        onPointerDown={(event) => event.stopPropagation()}
+                        onClick={() => addGalleryItemToCart(item)}
+                      >
+                        +
+                      </button>
                     </div>
                   </div>
                 )
