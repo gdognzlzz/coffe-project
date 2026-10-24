@@ -738,9 +738,6 @@ function App() {
   }
 
   function handleGalleryCardClick(item) {
-    if (galleryDragRef.current.moved) {
-      return
-    }
     setLightbox(item)
   }
 
@@ -1070,6 +1067,7 @@ function App() {
                     <button
                       type="button"
                       className="gallery-photo"
+                      onPointerDown={(event) => event.stopPropagation()}
                       onClick={() => handleGalleryCardClick(item)}
                       aria-label={`Ver ${item.title}`}
                     >
