@@ -1068,7 +1068,16 @@ function App() {
                       type="button"
                       className="gallery-photo"
                       onPointerDown={(event) => event.stopPropagation()}
-                      onClick={() => handleGalleryCardClick(item)}
+                      onPointerUp={(event) => {
+                        event.preventDefault()
+                        event.stopPropagation()
+                        handleGalleryCardClick(item)
+                      }}
+                      onClick={(event) => {
+                        if (event.detail === 0) {
+                          handleGalleryCardClick(item)
+                        }
+                      }}
                       aria-label={`Ver ${item.title}`}
                     >
                       <img src={item.source} alt={`Almán La Finca: ${item.title}`} draggable="false" />
