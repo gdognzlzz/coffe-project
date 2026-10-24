@@ -583,6 +583,15 @@ function App() {
         sectionNavigationTimeoutRef.current = window.setTimeout(() => {
           sectionNavigationRef.current = false
         }, 180)
+      } else {
+        let currentSection = 'inicio'
+        for (const id of ['nosotros', 'galeria', 'menu', 'pedido', 'ubicacion']) {
+          const target = document.getElementById(id)
+          if (target && target.getBoundingClientRect().top <= 145) {
+            currentSection = id
+          }
+        }
+        setActiveSection(currentSection)
       }
 
       const section = cupSectionRef.current
@@ -643,30 +652,6 @@ function App() {
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('resize', handleScroll)
     }
-  }, [])
-
-  useEffect(() => {
-    const sections = ['inicio', 'nosotros', 'galeria', 'menu', 'pedido', 'ubicacion']
-      .map((id) => document.getElementById(id))
-      .filter(Boolean)
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleSection = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-
-        if (visibleSection) {
-          if (!sectionNavigationRef.current) {
-            setActiveSection(visibleSection.target.id)
-          }
-        }
-      },
-      { rootMargin: '-125px 0px -55%', threshold: [0.1, 0.5] },
-    )
-
-    sections.forEach((section) => observer.observe(section))
-    return () => observer.disconnect()
   }, [])
 
   function handleSectionNavigation(id) {
