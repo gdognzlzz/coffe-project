@@ -1439,7 +1439,7 @@
 
 .gallery-qty {
   width: max-content;
-  margin: 0.75rem 0 0 auto;
+  margin: 0.75rem auto 0;
 }
 
 .gallery-qty button:disabled {
